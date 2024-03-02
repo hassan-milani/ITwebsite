@@ -1,0 +1,321 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>ICE Store</title>
+
+        <!-- CSS FILES -->
+       <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link href="{% static 'css/tooplate-little-fashion.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/viewpp.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ppe.css' %}">
+
+    </head>
+    
+    <body>
+
+        <section class="preloader">
+            <div class="spinner">
+                <span class="sk-inner-circle"></span>
+            </div>
+        </section>
+    
+        <main>
+
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="index.html">
+                        <strong><span>ICE </span>Store</strong>
+                    </a>
+
+                    <div class="d-lg-none">
+                        <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+
+                        <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'product_all' %}">Products</a>
+                                
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                            </li>
+                        </ul>
+                        
+  <div class="input-container">
+    <input type="text" name="text" class="input" placeholder="Search something...">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24" class="icon"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <rect fill="white" height="24" width="24"></rect> <path fill="" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
+    </div>
+                        
+                        </div>
+
+                        <div class="d-none d-lg-block">
+                            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+
+                            <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="slick-slideshow">   
+                <div class="slick-custom">
+                    <img src="images/slideshow/Discount.jpg" class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-10">
+                                    <h1 class="slick-title">FREEZ &#129398;</h1>
+
+                                    <p class="lead text-white mt-lg-3 mb-lg-5">Discount More than 50%</p>
+
+                                    <a href="{% url 'product_all' %}" class="btn custom-btn">BUY NOW.!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slick-custom">
+                    <img src="images/slideshow/new devices.jpeg" class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-10">
+                                    <h1 class="slick-title">New Devices</h1>
+
+                                    <p class="lead text-white mt-lg-3 mb-lg-5">Please share this ICE Store to your friends. Thank you for supporting us.</p>
+
+                                    <a href="{% url 'product_all' %}" class="btn custom-btn">Explore products</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slick-custom">
+                    <img src="images/slideshow/contact.jpeg" class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-10">
+                                    <h1 class="slick-title">Talk to us</h1>
+
+                                    <p class="lead text-white mt-lg-3 mb-lg-5">For Any Problem</p>
+
+                                    <a href="{% url 'contact' %}" class="btn custom-btn">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="front-product">
+                <div class="container-fluid p-0" style="margin: 25px 0 0 0px;">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-6 col-12">
+                            <img src="images/router.jpg" class="img-fluid" alt="" style="border-bottom-right-radius: 30px; border-top-right-radius: 30px;">
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="px-5 py-5 py-lg-0">
+                                <h2 class="mb-4"><span>View</span> All Products</h2>
+
+                                <p class="lead mb-4">Routers,Switchs,Hubs,Cables and Power Supply</p>
+
+
+                                    <button style="font-size: 13px;" class="button type1">
+                                        <a href="{% url 'product_all' %}"></a>
+                                        <span class="btn-txt"><a href="{% url 'product_all' %}">Explore Products</a></span>
+                                      </button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="featured-product section-padding">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-12 text-center">
+                            <h2 class="mb-5">Featured Products</h2>
+                        </div>
+
+                        <div class="col-lg-4 col-12 mb-3">
+                            <div class="product-thumb">
+                                <a href="{% url 'product_all' %}">
+                                    <img src="images/product/Tp-Link_logo_2016.png" class="img-fluid product-image" alt="">
+                                </a>
+
+                                <div class="product-top d-flex">
+
+                                    <a href="#" class="bi-heart-fill product-icon"></a>
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="{% url 'product_all' %}" class="product-title-link">TP-Link </a>
+                                        </h5>
+
+                                        <p class="product-p">TP-Link is the world's #1 provider of consumer networking products, which include routers, range extenders, switches, and network adapters.
+                                        </p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12 mb-3">
+                            <div class="product-thumb">
+                                <a href="{% url 'product_all' %}">
+                                    <img src="images/product/tenda.svg" class="img-fluid product-image" alt="">
+                                </a>
+
+                                <div class="product-top d-flex">
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="{% url 'product_all' %}" class="product-title-link">Tenda</a>
+                                        </h5>
+
+                                        <p class="product-p">Founded in 1999, Tenda technology is the recognized leading supplier of networking devices and equipments. Tenda has committed to delivering easy-to-install and affordable networking solutions, offering innovative, cutting-edge products to realize people's intelligent life.
+
+                                        </p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12 mb-5">
+                            <div class="product-thumb">
+                                <a href="Additions.html">
+                                    <img src="images/product/192.jpg" class="img-fluid product-image" alt="">
+                                </a>
+                                <div class="product-top d-flex">
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="Additions.html" class="product-title-link">Additions</a>
+                                        </h5>
+
+                                        <p class="product-p">CABLES, UBS, HUBS, SWITCH AND ACCESSORIES</p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center mt-5">
+                            <a href="{% url 'product_all' %}" class="codepen-button mt-5"><span>View all Products</span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-10 me-auto mb-4">
+                        <h4 class="text-white mb-3"><a href="index.html">ICE</a> Store</h4>
+                        <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2024 <strong>ICE Store</strong></p>
+                        <br>
+                        <p class="copyright-text">Designed by > Azoz & MoNazar </a></p>
+                    </div>
+
+                    <div class="col-lg-5 col-8">
+                        <h5 class="text-white mb-3">Sitemap</h5>
+
+                        <ul class="footer-menu d-flex flex-wrap">
+
+                            <li class="footer-menu-item"><a href="{% url 'product_all' %}" class="footer-menu-link">Products</a></li>
+                            <li class="footer-menu-item"><a href="{% url 'contact' %}" class="footer-menu-link">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-4">
+                        <h5 class="text-white mb-3">Social</h5>
+
+                        <ul class="social-icon">
+
+                            <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-telegram"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+        <!-- JAVASCRIPT FILES -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/Headroom.js' %}"></script>
+    <script src="{% static 'js/jQuery.headroom.js' %}"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+
+    </body>
+</html>
