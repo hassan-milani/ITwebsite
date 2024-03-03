@@ -1,216 +1,289 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>ICE Store - Products</title>
 
     <!-- CSS FILES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
-    <link href="{% static 'css/tooplate-little-fashion.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/viewpp.css' %}">
-   
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}" />
+    <link
+      href="{% static 'css/tooplate-little-fashion.css' %}"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/viewpp.css' %}" />
+  </head>
 
-<body>
-
+  <body>
     <section class="preloader">
-        <div class="spinner">
-            <span class="sk-inner-circle"></span>
-        </div>
+      <div class="spinner">
+        <span class="sk-inner-circle"></span>
+      </div>
     </section>
 
     <main>
+      <nav class="navbar navbar-expand-lg">
+        <!-- Navigation code here -->
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <nav class="navbar navbar-expand-lg">
-            <!-- Navigation code here -->
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+          <a class="navbar-brand" href="index.html">
+            <strong><span>ICE</span> Store</strong>
+          </a>
 
-                <a class="navbar-brand" href="index.html">
-                    <strong><span>ICE</span> Store</strong>
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+
+            <a href="product-detail.html" class="bi-bag custom-icon"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'product_all' %}"
+                  >Products</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+            </ul>
+
+            <div class="input-container">
+              <input
+                type="text"
+                name="text"
+                class="input"
+                placeholder="Search something..."
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill=""
+                viewBox="0 0 24 24"
+                class="icon"
+              >
+                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                  id="SVGRepo_tracerCarrier"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <rect fill="white" height="24" width="24"></rect>
+                  <path
+                    fill=""
+                    d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </g>
+              </svg>
+            </div>
+
+            <div class="d-none d-lg-block">
+              <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+
+              <a href="#" class="bi-bag custom-icon"
+                ><button
+                  type="submit"
+                  class="btn custom-btn cart-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cart-modal"
+                ></button
+              ></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <header
+        class="site-header section-padding d-flex justify-content-center align-items-center"
+      >
+        <!-- Header code here -->
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-10 col-12">
+              <h1>
+                <span class="d-block text-primary">Choose your</span>
+                <span class="d-block text-dark">favorite stuff</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="products section-padding">
+        <div class="container">
+          <div class="row">
+            {% for product in products %}
+
+            <div class="col-lg-4 col-12 mb-3">
+              <div class="product-thumb">
+                <a href="{% url 'product_detail' product.id %}">
+                  <img
+                    src="{{ product.p_image.url }}"
+                    class="img-fluid product-image"
+                    alt="{{ product.p_name }}"
+                  />
                 </a>
+                <div class="product-top d-flex">
+                  <!--  code here -->
+                  <span class="product-alert"></span>
 
-                <div class="d-lg-none">
-                    <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                    <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                  <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
                 </div>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'product_all' %}">Products</a>
-                            
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                        </li>
-                    </ul>
-
-                    <div class="input-container">
-                        <input type="text" name="text" class="input" placeholder="Search something...">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24" class="icon"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <rect fill="white" height="24" width="24"></rect> <path fill="" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
-                        </div>
-                    
-                    <div class="d-none d-lg-block">
-                        <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                        <a href="#" class="bi-bag custom-icon"><button type="submit" class="btn custom-btn cart-btn" data-bs-toggle="modal" data-bs-target="#cart-modal"></button></a>
-                    </div>
+                <div class="product-info d-flex">
+                  <div>
+                    <h5 class="product-title mb-0">
+                      <a
+                        href="{% url 'product_detail' product.id %}"
+                        class="product-title-link"
+                        >{{ product.p_name }}</a
+                      >
+                    </h5>
+                    <p class="product-p">{{ product.p_dec }}</p>
+                  </div>
+                  <small class="product-price text-muted ms-auto"
+                    >{{ product.p_price }}</small
+                  >
                 </div>
+              </div>
             </div>
-        
-        </nav>
-
-        <header class="site-header section-padding d-flex justify-content-center align-items-center">
-            <!-- Header code here -->
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-10 col-12">
-                        <h1>
-                            <span class="d-block text-primary">Choose your</span>
-                            <span class="d-block text-dark">favorite stuff</span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <section class="products section-padding">
-            <div class="container">
-                <div class="row">
-                    {% for product in products %}
-                    
-                    <div class="col-lg-4 col-12 mb-3">
-                        <div class="product-thumb">
-                            <a href="{% url 'product_detail' product.id %}">
-                                <img src="{{ product.p_image.url }}" class="img-fluid product-image" alt="{{ product.p_name }}">
-                            </a>
-                            <div class="product-top d-flex">
-                                <!--  code here -->
-                                <span class="product-alert"></span>
-
-                                <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
-                            </div>
-                            <div class="product-info d-flex">
-                                <div>
-                                    <h5 class="product-title mb-0">
-                                        <a href="{% url 'product_detail' product.id %}" class="product-title-link">{{ product.p_name }}</a>
-                                    </h5>
-                                    <p class="product-p">{{ product.p_dec }}</p>
-                                </div>
-                                <small class="product-price text-muted ms-auto">{{ product.p_price }}</small>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-
+            {% endfor %}
+          </div>
+        </div>
+      </section>
     </main>
     <!-- CART MODAL -->
-    <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0">
-                <div class="modal-header flex-column">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade"
+      id="cart-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+          <div class="modal-header flex-column">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <h1>Checkout</h1>
+              <div id="cart-items-container">
+                <!-- Cart items will be dynamically added here -->
+              </div>
+              <div id="total-price">
+                <!-- Total price will be dynamically updated here -->
+              </div>
+              <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                <img
+                  src="../images/product/AX55.jpg"
+                  height="252"
+                  width="348"
+                  alt=""
+                />
+              </div>
+
+              <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+                <h3 class="modal-title" id="exampleModalLabel">Archer AX55</h3>
+
+                <p class="product-price text-muted mt-3">95,000 IQD</p>
+
+                <p class="product-p">Quatity: <span class="ms-1">4</span></p>
+
+                <p class="product-p">Colour: <span class="ms-1">Black</span></p>
+
+                <div class="border-top mt-4 pt-3">
+                  <p class="product-p">
+                    <strong>Total: <span class="ms-1">95,000 IQD</span></strong>
+                  </p>
                 </div>
-
-                <div class="modal-body">
-                    <div class="row">
-
-                        <h1>Checkout</h1>
-                        <div id="cart-items-container">
-                            <!-- Cart items will be dynamically added here -->
-                        </div>
-                        <div id="total-price">
-                            <!-- Total price will be dynamically updated here -->
-                        </div>
-                        <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                            <img src="../images/product/AX55.jpg" height=252 width=348 alt="">
-                        </div>
-
-                        <div class="col-lg-6 col-12 mt-3 mt-lg-0">
-                            <h3 class="modal-title" id="exampleModalLabel">Archer AX55</h3>
-
-                            <p class="product-price text-muted mt-3">95,000 IQD</p>
-
-                            <p class="product-p">Quatity: <span class="ms-1">4</span></p>
-
-                            <p class="product-p">Colour: <span class="ms-1">Black</span></p>
-
-                            <div class="border-top mt-4 pt-3">
-                                <p class="product-p"><strong>Total: <span class="ms-1">95,000 IQD</span></strong></p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <div class="row w-50">
-                        <button type="button" class="btn custom-btn cart-btn ms-lg-4">Checkout</button>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
 
+          <div class="modal-footer">
+            <div class="row w-50">
+              <button type="button" class="btn custom-btn cart-btn ms-lg-4">
+                Checkout
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Bind function to execute when the modal is shown
-            $('#cart-modal').on('show.bs.modal', function (e) {
-                // Retrieve cart items from local storage
-                var cartItems = JSON.parse(localStorage.getItem('cart'));
-                console.log(cartItems)
-                
-                // Check if cart items exist
-                if (cartItems > 0) {
-                    var totalPrice = 0;
-                    
-                    // Iterate over cart items and display them
-                    cartItems.forEach(function(item) {
-                        var itemHtml = '<div class="cart-item">';
-                        itemHtml += '<p>' + item.product_id + '</p>';
-                        itemHtml += '<p>Quantity: ' + item.quantity + '</p>';
-                        itemHtml += '<p>Price: $' + item.item_price + '</p>';
-                        itemHtml += '</div>';
-                        
-                        $('#cart-items-container').append(itemHtml);
-                        
-                        // Calculate total price
-                        totalPrice += parseFloat(item.item_price);
-                    });
-                    
-                    // Display total price
-                    $('#total-price').text('Total Price: $' + totalPrice.toFixed(2));
-                } else {
-                    // If cart is empty, display a message or handle it accordingly
-                    $('#cart-items-container').html('<p>Cart is empty</p>');
-                }
+      $(document).ready(function () {
+        // Bind function to execute when the modal is shown
+        $("#cart-modal").on("show.bs.modal", function (e) {
+          // Retrieve cart items from local storage
+          var cartItems = JSON.parse(localStorage.getItem("cart"));
+          console.log(cartItems);
+
+          // Check if cart items exist
+          if (cartItems > 0) {
+            var totalPrice = 0;
+
+            // Iterate over cart items and display them
+            cartItems.forEach(function (item) {
+              var itemHtml = '<div class="cart-item">';
+              itemHtml += "<p>" + item.product_id + "</p>";
+              itemHtml += "<p>Quantity: " + item.quantity + "</p>";
+              itemHtml += "<p>Price: $" + item.item_price + "</p>";
+              itemHtml += "</div>";
+
+              $("#cart-items-container").append(itemHtml);
+
+              // Calculate total price
+              totalPrice += parseFloat(item.item_price);
             });
+
+            // Display total price
+            $("#total-price").text("Total Price: $" + totalPrice.toFixed(2));
+          } else {
+            // If cart is empty, display a message or handle it accordingly
+            $("#cart-items-container").html("<p>Cart is empty</p>");
+          }
         });
+      });
     </script>
-        
+
     <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
@@ -218,6 +291,5 @@
     <script src="{% static 'js/jQuery.headroom.js' %}"></script>
     <script src="{% static 'js/slick.min.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
-
-</body>
+  </body>
 </html>

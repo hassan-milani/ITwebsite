@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Product, Client, Order, Category
 import json
-
+from django.views.decorators.http import require_GET
 
 
 
@@ -29,6 +29,22 @@ def get_cart_items(request):
     # Return cart items as JSON response
     return JsonResponse({'cart': cart_items})
 
+
+@require_GET
+def get_product_price(request):
+    product_id = request.GET.get('product_id')
+    
+    try:
+        product = Product.objects.get(id=product_id)
+        response = {
+            'name': product.p_name,
+            'price': product.p_price
+        }
+        return JsonResponse(response)
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    
+    
 def create_order(request):
     if request.method == 'POST':
         # Assuming the request data contains product ids and quantities
