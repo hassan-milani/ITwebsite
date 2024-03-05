@@ -109,7 +109,10 @@
             </div>
 
             <div class="d-none d-lg-block">
-              <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+              <a
+                href="{% url 'register' %}"
+                class="bi-person custom-icon me-3"
+              ></a>
 
               <a href="#" class="bi-bag custom-icon"
                 ><button
@@ -203,34 +206,22 @@
 
           <div class="modal-body">
             <div class="row">
-              <h1>Checkout</h1>
+              <h1>Cart Items</h1>
               <div id="cart-items-container">
                 <!-- Cart items will be dynamically added here -->
               </div>
-              <div id="total-price">
-                <!-- Total price will be dynamically updated here -->
-              </div>
-              <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                <img
-                  src="../images/product/AX55.jpg"
-                  height="252"
-                  width="348"
-                  alt=""
-                />
-              </div>
 
               <div class="col-lg-6 col-12 mt-3 mt-lg-0">
-                <h3 class="modal-title" id="exampleModalLabel">Archer AX55</h3>
-
-                <p class="product-price text-muted mt-3">95,000 IQD</p>
-
-                <p class="product-p">Quatity: <span class="ms-1">4</span></p>
-
-                <p class="product-p">Colour: <span class="ms-1">Black</span></p>
-
                 <div class="border-top mt-4 pt-3">
                   <p class="product-p">
-                    <strong>Total: <span class="ms-1">95,000 IQD</span></strong>
+                    <strong
+                      >Total:
+                      <span class="ms-1"
+                        ><div id="total-price">
+                          <!-- Total price will be dynamically updated here -->
+                        </div></span
+                      ></strong
+                    >
                   </p>
                 </div>
               </div>
@@ -247,6 +238,7 @@
         </div>
       </div>
     </div>
+    <!-- Your existing HTML code here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function () {
@@ -257,25 +249,69 @@
           console.log(cartItems);
 
           // Check if cart items exist
-          if (cartItems > 0) {
+          if (cartItems) {
             var totalPrice = 0;
+            var itemRequests = [];
 
-            // Iterate over cart items and display them
-            cartItems.forEach(function (item) {
-              var itemHtml = '<div class="cart-item">';
-              itemHtml += "<p>" + item.product_id + "</p>";
-              itemHtml += "<p>Quantity: " + item.quantity + "</p>";
-              itemHtml += "<p>Price: $" + item.item_price + "</p>";
-              itemHtml += "</div>";
-
-              $("#cart-items-container").append(itemHtml);
-
-              // Calculate total price
-              totalPrice += parseFloat(item.item_price);
+            // Convert cart items object to array of objects
+            var cartItemsArray = Object.entries(cartItems).map(function ([
+              productId,
+              quantity,
+            ]) {
+              return { product_id: productId, quantity: quantity };
             });
 
-            // Display total price
-            $("#total-price").text("Total Price: $" + totalPrice.toFixed(2));
+            // Map cart items to AJAX requests to fetch prices
+            cartItemsArray.forEach(function (item) {
+              itemRequests.push(
+                $.ajax({
+                  url: "{% url 'get_product_price' %}",
+                  type: "GET",
+                  data: { product_id: item.product_id },
+                  success: function (response) {
+                    var itemPrice = response.price;
+                    var itemHtml =
+                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
+                    itemHtml +=
+                      '<div class="card flex-lg-row align-items-center border-0">';
+                    itemHtml +=
+                      '<img src="' +
+                      response.image +
+                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
+                      response.name +
+                      '">';
+                    itemHtml +=
+                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
+                    itemHtml +=
+                      '<h5 class="modal-title">' + response.name + "</h5>";
+                    itemHtml +=
+                      '<p class="product-p">Quantity: ' +
+                      item.quantity +
+                      "</p>";
+                    itemHtml +=
+                      '<p class="product-price text-muted mt-3">' +
+                      itemPrice +
+                      " IQD</p>";
+                    itemHtml += "</div></div></div>";
+
+                    // Append item HTML to container
+                    $("#cart-items-container").append(itemHtml);
+
+                    // Calculate total price
+                    totalPrice += parseFloat(itemPrice * item.quantity);
+                  },
+                  error: function (xhr, status, error) {
+                    console.error(error);
+                  },
+                })
+              );
+            });
+
+            // Execute all AJAX requests
+            $.when.apply($, itemRequests).done(function () {
+              // Display total price
+              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
+            });
           } else {
             // If cart is empty, display a message or handle it accordingly
             $("#cart-items-container").html("<p>Cart is empty</p>");

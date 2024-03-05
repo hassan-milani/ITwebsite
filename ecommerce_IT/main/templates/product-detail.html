@@ -213,33 +213,22 @@
 
           <div class="modal-body">
             <div class="row">
-              <h1>Checkout</h1>
+              <h1>Cart Items</h1>
               <div id="cart-items-container">
                 <!-- Cart items will be dynamically added here -->
               </div>
-              <div id="total-price">
-                <!-- Total price will be dynamically updated here -->
-              </div>
-              <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                <img
-                  src="{{ product.p_image.url }}"
-                  class="img-fluid product-image"
-                  alt="{{ product.p_name }}"
-                />
-              </div>
 
               <div class="col-lg-6 col-12 mt-3 mt-lg-0">
-                <h3 class="modal-title" id="exampleModalLabel">Archer AX55</h3>
-
-                <p class="product-price text-muted mt-3">95,000 IQD</p>
-
-                <p class="product-p">Quatity: <span class="ms-1">4</span></p>
-
-                <p class="product-p">Colour: <span class="ms-1">Black</span></p>
-
                 <div class="border-top mt-4 pt-3">
                   <p class="product-p">
-                    <strong>Total: <span class="ms-1">95,000 IQD</span></strong>
+                    <strong
+                      >Total:
+                      <span class="ms-1"
+                        ><div id="total-price">
+                          <!-- Total price will be dynamically updated here -->
+                        </div></span
+                      ></strong
+                    >
                   </p>
                 </div>
               </div>
@@ -312,11 +301,29 @@
                   data: { product_id: item.product_id },
                   success: function (response) {
                     var itemPrice = response.price;
-                    var itemHtml = '<div class="cart-item">';
-                    itemHtml += "<p>" + response.name + "</p>"; // Assuming the view returns product name
-                    itemHtml += "<p>Quantity: " + item.quantity + "</p>";
-                    itemHtml += "<p>Price: $" + itemPrice + "</p>";
-                    itemHtml += "</div>";
+                    var itemHtml =
+                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
+                    itemHtml +=
+                      '<div class="card flex-lg-row align-items-center border-0">';
+                    itemHtml +=
+                      '<img src="' +
+                      response.image +
+                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
+                      response.name +
+                      '">';
+                    itemHtml +=
+                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
+                    itemHtml +=
+                      '<h5 class="modal-title">' + response.name + "</h5>";
+                    itemHtml +=
+                      '<p class="product-p">Quantity: ' +
+                      item.quantity +
+                      "</p>";
+                    itemHtml +=
+                      '<p class="product-price text-muted mt-3">' +
+                      itemPrice +
+                      " IQD</p>";
+                    itemHtml += "</div></div></div>";
 
                     // Append item HTML to container
                     $("#cart-items-container").append(itemHtml);
@@ -334,7 +341,7 @@
             // Execute all AJAX requests
             $.when.apply($, itemRequests).done(function () {
               // Display total price
-              $("#total-price").text("Total Price: $" + totalPrice.toFixed(2));
+              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
             });
           } else {
             // If cart is empty, display a message or handle it accordingly

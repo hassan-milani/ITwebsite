@@ -45,6 +45,7 @@ https://www.tooplate.com/view/2127-little-fashion
 
     <main>
       <nav class="navbar navbar-expand-lg">
+        <!-- Navigation code here -->
         <div class="container">
           <button
             class="navbar-toggler"
@@ -71,15 +72,17 @@ https://www.tooplate.com/view/2127-little-fashion
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="{% url 'product_all' %}">Products</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" href="contact.html">Contact</a>
+                <a class="nav-link active" href="{% url 'contact' %}"
+                  >Contact</a
+                >
               </li>
             </ul>
 
@@ -113,15 +116,25 @@ https://www.tooplate.com/view/2127-little-fashion
                 </g>
               </svg>
             </div>
-            <div class="d-none d-lg-block">
-              <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
 
-              <a href="product-detail.html" class="bi-bag custom-icon"></a>
+            <div class="d-none d-lg-block">
+              <a
+                href="{% url 'register' %}"
+                class="bi-person custom-icon me-3"
+              ></a>
+
+              <a href="#" class="bi-bag custom-icon"
+                ><button
+                  type="submit"
+                  class="btn custom-btn cart-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cart-modal"
+                ></button
+              ></a>
             </div>
           </div>
         </div>
       </nav>
-
       <header class="site-header section-padding-img site-header-image">
         <div class="container">
           <div class="row">
@@ -256,6 +269,140 @@ https://www.tooplate.com/view/2127-little-fashion
         </div>
       </section>
     </main>
+    <!-- CART MODAL -->
+    <div
+      class="modal fade"
+      id="cart-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+          <div class="modal-header flex-column">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <h1>Cart Items</h1>
+              <div id="cart-items-container">
+                <!-- Cart items will be dynamically added here -->
+              </div>
+
+              <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+                <div class="border-top mt-4 pt-3">
+                  <p class="product-p">
+                    <strong
+                      >Total:
+                      <span class="ms-1"
+                        ><div id="total-price">
+                          <!-- Total price will be dynamically updated here -->
+                        </div></span
+                      ></strong
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="row w-50">
+              <button type="button" class="btn custom-btn cart-btn ms-lg-4">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Your existing HTML code here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Bind function to execute when the modal is shown
+        $("#cart-modal").on("show.bs.modal", function (e) {
+          // Retrieve cart items from local storage
+          var cartItems = JSON.parse(localStorage.getItem("cart"));
+          console.log(cartItems);
+
+          // Check if cart items exist
+          if (cartItems) {
+            var totalPrice = 0;
+            var itemRequests = [];
+
+            // Convert cart items object to array of objects
+            var cartItemsArray = Object.entries(cartItems).map(function ([
+              productId,
+              quantity,
+            ]) {
+              return { product_id: productId, quantity: quantity };
+            });
+
+            // Map cart items to AJAX requests to fetch prices
+            cartItemsArray.forEach(function (item) {
+              itemRequests.push(
+                $.ajax({
+                  url: "{% url 'get_product_price' %}",
+                  type: "GET",
+                  data: { product_id: item.product_id },
+                  success: function (response) {
+                    var itemPrice = response.price;
+                    var itemHtml =
+                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
+                    itemHtml +=
+                      '<div class="card flex-lg-row align-items-center border-0">';
+                    itemHtml +=
+                      '<img src="' +
+                      response.image +
+                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
+                      response.name +
+                      '">';
+                    itemHtml +=
+                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
+                    itemHtml +=
+                      '<h5 class="modal-title">' + response.name + "</h5>";
+                    itemHtml +=
+                      '<p class="product-p">Quantity: ' +
+                      item.quantity +
+                      "</p>";
+                    itemHtml +=
+                      '<p class="product-price text-muted mt-3">' +
+                      itemPrice +
+                      " IQD</p>";
+                    itemHtml += "</div></div></div>";
+
+                    // Append item HTML to container
+                    $("#cart-items-container").append(itemHtml);
+
+                    // Calculate total price
+                    totalPrice += parseFloat(itemPrice * item.quantity);
+                  },
+                  error: function (xhr, status, error) {
+                    console.error(error);
+                  },
+                })
+              );
+            });
+
+            // Execute all AJAX requests
+            $.when.apply($, itemRequests).done(function () {
+              // Display total price
+              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
+            });
+          } else {
+            // If cart is empty, display a message or handle it accordingly
+            $("#cart-items-container").html("<p>Cart is empty</p>");
+          }
+        });
+      });
+    </script>
 
     <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>

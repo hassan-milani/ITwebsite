@@ -34,51 +34,97 @@
     
         <main>
 
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+           <nav class="navbar navbar-expand-lg">
+        <!-- Navigation code here -->
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                    <a class="navbar-brand" href="index.html">
-                        <strong><span>ICE </span>Store</strong>
-                    </a>
+          <a class="navbar-brand" href="index.html">
+            <strong><span>ICE</span> Store</strong>
+          </a>
 
-                    <div class="d-lg-none">
-                        <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
 
-                        <a href="product-detail.html" class="bi-bag custom-icon"></a>
-                    </div>
+            <a href="product-detail.html" class="bi-bag custom-icon"></a>
+          </div>
 
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mx-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'home' %}">Home</a>
-                            </li>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+              </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'product_all' %}">Products</a>
-                                
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                            </li>
-                        </ul>
-                        
-  <div class="input-container">
-    <input type="text" name="text" class="input" placeholder="Search something...">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24" class="icon"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <rect fill="white" height="24" width="24"></rect> <path fill="" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
-    </div>
-                        
-                        </div>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'product_all' %}">Products</a>
+              </li>
 
-                        <div class="d-none d-lg-block">
-                            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+              <li class="nav-item">
+                <a class="nav-link " href="{% url 'contact' %}"
+                  >Contact</a
+                >
+              </li>
+            </ul>
 
-                            <a href="product-detail.html" class="bi-bag custom-icon"></a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <div class="input-container">
+              <input
+                type="text"
+                name="text"
+                class="input"
+                placeholder="Search something..."
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill=""
+                viewBox="0 0 24 24"
+                class="icon"
+              >
+                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                  id="SVGRepo_tracerCarrier"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <rect fill="white" height="24" width="24"></rect>
+                  <path
+                    fill=""
+                    d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </g>
+              </svg>
+            </div>
+
+            <div class="d-none d-lg-block">
+              <a
+                href="{% url 'register' %}"
+                class="bi-person custom-icon me-3"
+              ></a>
+
+              <a href="#" class="bi-bag custom-icon"
+                ><button
+                  type="submit"
+                  class="btn custom-btn cart-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cart-modal"
+                ></button
+              ></a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
             <section class="slick-slideshow">   
                 <div class="slick-custom">
@@ -307,6 +353,140 @@
                 </div>
             </div>
         </footer>
+        <!-- CART MODAL -->
+    <div
+      class="modal fade"
+      id="cart-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+          <div class="modal-header flex-column">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <h1>Cart Items</h1>
+              <div id="cart-items-container">
+                <!-- Cart items will be dynamically added here -->
+              </div>
+
+              <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+                <div class="border-top mt-4 pt-3">
+                  <p class="product-p">
+                    <strong
+                      >Total:
+                      <span class="ms-1"
+                        ><div id="total-price">
+                          <!-- Total price will be dynamically updated here -->
+                        </div></span
+                      ></strong
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="row w-50">
+              <button type="button" class="btn custom-btn cart-btn ms-lg-4">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Your existing HTML code here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Bind function to execute when the modal is shown
+        $("#cart-modal").on("show.bs.modal", function (e) {
+          // Retrieve cart items from local storage
+          var cartItems = JSON.parse(localStorage.getItem("cart"));
+          console.log(cartItems);
+
+          // Check if cart items exist
+          if (cartItems) {
+            var totalPrice = 0;
+            var itemRequests = [];
+
+            // Convert cart items object to array of objects
+            var cartItemsArray = Object.entries(cartItems).map(function ([
+              productId,
+              quantity,
+            ]) {
+              return { product_id: productId, quantity: quantity };
+            });
+
+            // Map cart items to AJAX requests to fetch prices
+            cartItemsArray.forEach(function (item) {
+              itemRequests.push(
+                $.ajax({
+                  url: "{% url 'get_product_price' %}",
+                  type: "GET",
+                  data: { product_id: item.product_id },
+                  success: function (response) {
+                    var itemPrice = response.price;
+                    var itemHtml =
+                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
+                    itemHtml +=
+                      '<div class="card flex-lg-row align-items-center border-0">';
+                    itemHtml +=
+                      '<img src="' +
+                      response.image +
+                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
+                      response.name +
+                      '">';
+                    itemHtml +=
+                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
+                    itemHtml +=
+                      '<h5 class="modal-title">' + response.name + "</h5>";
+                    itemHtml +=
+                      '<p class="product-p">Quantity: ' +
+                      item.quantity +
+                      "</p>";
+                    itemHtml +=
+                      '<p class="product-price text-muted mt-3">' +
+                      itemPrice +
+                      " IQD</p>";
+                    itemHtml += "</div></div></div>";
+
+                    // Append item HTML to container
+                    $("#cart-items-container").append(itemHtml);
+
+                    // Calculate total price
+                    totalPrice += parseFloat(itemPrice * item.quantity);
+                  },
+                  error: function (xhr, status, error) {
+                    console.error(error);
+                  },
+                })
+              );
+            });
+
+            // Execute all AJAX requests
+            $.when.apply($, itemRequests).done(function () {
+              // Display total price
+              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
+            });
+          } else {
+            // If cart is empty, display a message or handle it accordingly
+            $("#cart-items-container").html("<p>Cart is empty</p>");
+          }
+        });
+      });
+    </script>
 
         <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>

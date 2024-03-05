@@ -38,7 +38,8 @@ def get_product_price(request):
         product = Product.objects.get(id=product_id)
         response = {
             'name': product.p_name,
-            'price': product.p_price
+            'price': product.p_price,
+            'image':product.p_image.url
         }
         return JsonResponse(response)
     except Product.DoesNotExist:
