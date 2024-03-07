@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     p_name = models.CharField(max_length=200,null=True,blank=True)
-    p_price = models.DecimalField(max_digits=100,null=True,blank=True, decimal_places = 7)
+    p_price = models.DecimalField(max_digits=100,null=True,blank=True, decimal_places = 2)
     p_image = models.ImageField(null=True,blank=True)
     p_dec = models.TextField(null=True,blank=True)
     category = models.ForeignKey(Category,default=None, null=True, on_delete=models.PROTECT)

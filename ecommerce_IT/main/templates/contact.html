@@ -118,19 +118,33 @@ https://www.tooplate.com/view/2127-little-fashion
             </div>
 
             <div class="d-none d-lg-block">
+            {% if request.user.is_authenticated %}
+              <a href="#"
+                ><button
+                  type="submit"
+                  class="btn btn-outline-dark cart-btn rounded"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cart-modal"
+                ><small class="bi-bag"></small></button
+              ></a>
+            {% else %}
+            
               <a
                 href="{% url 'register' %}"
                 class="bi-person custom-icon me-3"
               ></a>
-
-              <a href="#" class="bi-bag custom-icon"
+              <a href="#"
                 ><button
                   type="submit"
-                  class="btn custom-btn cart-btn"
+                  class="btn btn-outline-dark cart-btn rounded w-75"
                   data-bs-toggle="modal"
                   data-bs-target="#cart-modal"
-                ></button
+                ><small class="bi-bag"></small></button
               ></a>
+            {% endif %}
+            
+
+              
             </div>
           </div>
         </div>
@@ -148,7 +162,7 @@ https://www.tooplate.com/view/2127-little-fashion
         </div>
 
         <img
-          src="images/header/positive-european-woman-has-break-after-work.jpg"
+          src="{% static 'images/header/positive-european-woman-has-break-after-work.jpg' %}"
           class="header-image img-fluid"
           alt=""
         />
@@ -324,85 +338,6 @@ https://www.tooplate.com/view/2127-little-fashion
     </div>
     <!-- Your existing HTML code here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        // Bind function to execute when the modal is shown
-        $("#cart-modal").on("show.bs.modal", function (e) {
-          // Retrieve cart items from local storage
-          var cartItems = JSON.parse(localStorage.getItem("cart"));
-          console.log(cartItems);
-
-          // Check if cart items exist
-          if (cartItems) {
-            var totalPrice = 0;
-            var itemRequests = [];
-
-            // Convert cart items object to array of objects
-            var cartItemsArray = Object.entries(cartItems).map(function ([
-              productId,
-              quantity,
-            ]) {
-              return { product_id: productId, quantity: quantity };
-            });
-
-            // Map cart items to AJAX requests to fetch prices
-            cartItemsArray.forEach(function (item) {
-              itemRequests.push(
-                $.ajax({
-                  url: "{% url 'get_product_price' %}",
-                  type: "GET",
-                  data: { product_id: item.product_id },
-                  success: function (response) {
-                    var itemPrice = response.price;
-                    var itemHtml =
-                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
-                    itemHtml +=
-                      '<div class="card flex-lg-row align-items-center border-0">';
-                    itemHtml +=
-                      '<img src="' +
-                      response.image +
-                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
-                      response.name +
-                      '">';
-                    itemHtml +=
-                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
-                    itemHtml +=
-                      '<h5 class="modal-title">' + response.name + "</h5>";
-                    itemHtml +=
-                      '<p class="product-p">Quantity: ' +
-                      item.quantity +
-                      "</p>";
-                    itemHtml +=
-                      '<p class="product-price text-muted mt-3">' +
-                      itemPrice +
-                      " IQD</p>";
-                    itemHtml += "</div></div></div>";
-
-                    // Append item HTML to container
-                    $("#cart-items-container").append(itemHtml);
-
-                    // Calculate total price
-                    totalPrice += parseFloat(itemPrice * item.quantity);
-                  },
-                  error: function (xhr, status, error) {
-                    console.error(error);
-                  },
-                })
-              );
-            });
-
-            // Execute all AJAX requests
-            $.when.apply($, itemRequests).done(function () {
-              // Display total price
-              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
-            });
-          } else {
-            // If cart is empty, display a message or handle it accordingly
-            $("#cart-items-container").html("<p>Cart is empty</p>");
-          }
-        });
-      });
-    </script>
 
     <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>

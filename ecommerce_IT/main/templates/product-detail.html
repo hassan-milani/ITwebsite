@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>ICE Store - Product Detail</title>
 
     <!-- CSS FILES -->
@@ -60,11 +61,11 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'product_all' %}">Products</a>
+                <a class="nav-link active" href="{% url 'product_all' %}">Products</a>
               </li>
 
               <li class="nav-item">
@@ -104,16 +105,33 @@
             </div>
 
             <div class="d-none d-lg-block">
-              <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-              <a href="#" class="bi-bag custom-icon"
+            {% if request.user.is_authenticated %}
+              <a href="#"
                 ><button
                   type="submit"
-                  class="btn custom-btn cart-btn"
+                  class="btn btn-outline-dark cart-btn rounded"
                   data-bs-toggle="modal"
                   data-bs-target="#cart-modal"
-                ></button
+                ><small class="bi-bag"></small></button
               ></a>
+            {% else %}
+            
+              <a
+                href="{% url 'register' %}"
+                class="bi-person custom-icon me-3"
+              ></a>
+              <a href="#"
+                ><button
+                  type="submit"
+                  class="btn btn-outline-dark cart-btn rounded w-75"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cart-modal"
+                ><small class="bi-bag"></small></button
+              ></a>
+            {% endif %}
+            
+
+              
             </div>
           </div>
         </div>
@@ -151,7 +169,7 @@
                   <h2 class="product-title mb-0">{{ product.p_name }}</h2>
                 </div>
                 <small class="product-price text-muted ms-auto mt-auto mb-5"
-                  >${{ product.p_price }}</small
+                  >{{ product.p_price }} IQD</small
                 >
               </div>
               <div class="product-description">
@@ -237,9 +255,9 @@
 
           <div class="modal-footer">
             <div class="row w-50">
-              <button type="button" class="btn custom-btn cart-btn ms-lg-4">
-                Checkout
-              </button>
+                <button type="button" class="btn custom-btn cart-btn ms-lg-4" id="checkoutBtn">
+                    Checkout
+                </button>
             </div>
           </div>
         </div>
@@ -248,6 +266,65 @@
     <!-- Your existing HTML code here -->
 
     <!-- JAVASCRIPT FILES -->
+    <script>
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+        // Assuming you have already stored cart items in localStorage
+        var cartItems = JSON.parse(localStorage.getItem('cart'));
+
+        // Convert cartItems to the required format
+        var cartItemsArray = Object.entries(cartItems).map(function ([productId, quantity]) {
+            return { product_id: productId, quantity: quantity };
+        });
+
+        // AJAX function to send cart items to the Django view
+        function postCartItemsToServer() {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Configure the request
+            xhr.open('POST', "{% url 'create_order' %}", true);
+             // Include the CSRF token in the request headers
+            xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Define what happens on successful data submission
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response);
+                    // Clear localStorage after logging the response
+                    localStorage.clear();
+                    // Refresh the page after successful checkout
+                    location.reload();
+                    // Handle success response here
+                } else {
+                    // Handle error response here
+                    console.error('Request failed:', xhr.statusText);
+                }
+            };
+
+            // Define what happens in case of an error
+            xhr.onerror = function () {
+                console.error('Request failed:', xhr.statusText);
+            };
+
+            // Convert cartItemsArray to JSON string
+            var data = JSON.stringify({ cart: cartItemsArray });
+            console.log(data)
+            // Send the request
+            xhr.send(data);
+        }
+        // Function to retrieve the CSRF token from the meta tag
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        // Call the function to send cart items to the server
+        postCartItemsToServer();
+    });
+</script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function () {

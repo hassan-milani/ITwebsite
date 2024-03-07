@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CreateUserForm
 from .decorators import *
+from main.models import Client
 
 
 
@@ -19,7 +20,8 @@ def registerORlogin(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('index')
+            Client.objects.create(c_name=username, c_email=f'{username}@gmail.com',c_phone=111111)
+            return redirect('home')
         else:
             form = CreateUserForm()
             messages.error(request, f'check the information you have entered!')
@@ -32,7 +34,7 @@ def registerORlogin(request):
             
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('home')
         else:
             messages.info(request, 'اسم المستخدم أو كلمة المرور خطأ')
     return render(request, "users/register.html", {'form':form})

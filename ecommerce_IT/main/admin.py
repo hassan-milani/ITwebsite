@@ -6,7 +6,7 @@ from .models import *
 class ClientAdmin(admin.ModelAdmin):
     list_display = ["id", "c_name", "c_email", "c_phone"]
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["id", "p_name", "p_price", "p_dec"]
+    list_display = ["id", "p_name", "p_price", "p_dec", "category"]
 class OrderAdmin(admin.ModelAdmin):
     list_display = ["id", "order_id", "order_final_price", "order_items", "client"]
 
