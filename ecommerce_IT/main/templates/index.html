@@ -117,12 +117,19 @@
                   data-bs-target="#cart-modal"
                 ><small class="bi-bag"></small></button
               ></a>
+              <a href="{% url 'logout' %}"
+                ><button
+                  class="btn btn-outline-dark cart-btn rounded" 
+                ><small class="">Log out</small></button
+              ></a>
             {% else %}
             
               <a
                 href="{% url 'register' %}"
-                class="bi-person custom-icon me-3"
-              ></a>
+                
+              ><button
+              class="btn btn-outline-dark cart-btn rounded" 
+            ><small class="bi-person custom-icon"></small></button></a>
               <a href="#"
                 ><button
                   type="submit"

@@ -23,6 +23,8 @@ def product_detail_view(request, product_id):
     product = Product.objects.get(pk=product_id)
     return render(request, 'product-detail.html', {'product': product})
 
+
+######## احتياط
 def get_cart_items(request):
     # Retrieve cart items from session
     cart_items = request.session.get('cart', [])
@@ -84,6 +86,7 @@ def create_order(request):
         return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
+######## احتياط
 def checkout(request):
     if request.method == 'GET':
         order_id = request.session.get('order_id')

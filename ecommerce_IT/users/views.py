@@ -21,7 +21,7 @@ def registerORlogin(request):
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             Client.objects.create(c_name=username, c_email=f'{username}@gmail.com',c_phone=111111)
-            return redirect('home')
+            return redirect('register')
         else:
             form = CreateUserForm()
             messages.error(request, f'check the information you have entered!')
