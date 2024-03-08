@@ -30,8 +30,7 @@ class Order(models.Model):
     order_final_price = models.DecimalField(null=True,blank=True,max_digits=100, decimal_places= 10)
     order_items = models.TextField(null=True,blank=True)
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
-    def __str__(self) -> str:
-        return self.order_id
+   
 
 
     

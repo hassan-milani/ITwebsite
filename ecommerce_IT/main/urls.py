@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import product_all_view, product_detail_view, get_cart_items, create_order, checkout, home_view, contact_view, get_product_price
+from .views import product_all_view, product_detail_view, get_cart_items, create_order, checkout, home_view, contact_view, get_product_price, product_search
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('products/', product_all_view, name='product_all'),
+    path('products_search/',product_search, name='product_search'),
     path('', home_view, name='home'),
     path('contact/', contact_view, name='contact'),
     path('products/<int:product_id>/', product_detail_view, name='product_detail'),

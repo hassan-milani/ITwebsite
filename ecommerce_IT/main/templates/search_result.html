@@ -4,10 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <meta name="description" content="" />
     <meta name="author" content="" />
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>ICE Store - Product Detail</title>
+
+    <title>ICE Store - Products</title>
 
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,17 +26,18 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{% static 'css/viewpp.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/routers.css' %}" />
   </head>
-  <body style="background-color: rgb(255, 255, 255)">
-    <!-- Your existing HTML code here -->
+
+  <body>
     <section class="preloader">
       <div class="spinner">
         <span class="sk-inner-circle"></span>
       </div>
     </section>
+
     <main>
       <nav class="navbar navbar-expand-lg">
+        <!-- Navigation code here -->
         <div class="container">
           <button
             class="navbar-toggler"
@@ -65,13 +68,16 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'product_all' %}">Products</a>
+                <a class="nav-link active" href="{% url 'product_all' %}"
+                  >Products</a
+                >
               </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact' %}">Contact</a>
               </li>
             </ul>
+
 
             <form action="{% url 'product_search' %}" method="GET">
               <div class="input-container mx-3">
@@ -109,6 +115,7 @@
                   </button>
               </div>
           </form>
+            
 
             <div class="d-none d-lg-block">
               {% if request.user.is_authenticated %}
@@ -130,9 +137,9 @@
             
             <div class="row">
               <div class="col">
-                  <button type="submit" class="btn btn-outline-light cart-btn rounded text-center custom-icon" data-bs-toggle="modal" data-bs-target="#cart-modal">
-                      <i class="bi-bag"></i>
-                  </button>
+                <button type="submit" class="btn btn-outline-light cart-btn rounded text-center custom-icon" data-bs-toggle="modal" data-bs-target="#cart-modal">
+                  <i class="bi-bag"></i>
+                </button>
               </div>
               <div class="col">
                   <a href="{% url 'register' %}" class=" btn btn-outline-light cart-btn rounded text-center custom-icon "> <i class="bi-person"></i></a>
@@ -150,72 +157,66 @@
       <header
         class="site-header section-padding d-flex justify-content-center align-items-center"
       >
+        <!-- Header code here -->
         <div class="container">
           <div class="row">
             <div class="col-lg-10 col-12">
               <h1>
-                <span class="d-block text-primary">We provide you</span>
-                <span class="d-block text-dark">Best Routers</span>
+                <span class="d-block text-primary">Choose your</span>
+                <span class="d-block text-dark">favorite stuff</span>
               </h1>
             </div>
           </div>
         </div>
       </header>
-      <section class="product-detail section-padding">
+      
+    
+
+      <section class="products section-padding">
         <div class="container">
           <div class="row">
-            <div class="col-lg-6 col-12">
+            {% if results %}
+            
+            <h3 class="modal-title mt-5">Search Results for "{{ query }}"</h3>
+            {% for product in results %}
+
+            <div class="col-lg-4 col-12 mb-3">
               <div class="product-thumb">
-                <img
-                  src="{{ product.p_image.url }}"
-                  class="img-fluid product-image"
-                  alt="{{ product.p_name }}"
-                />
+                <a href="{% url 'product_detail' product.id %}">
+                  <img
+                    src="{{ product.p_image.url }}"
+                    class="img-fluid product-image"
+                    alt="{{ product.p_name }}"
+                  />
+                </a>
+                <div class="product-top d-flex">
+                  <!--  code here -->
+                  <span class="product-alert"></span>
+
+                  <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
+                </div>
+                <div class="product-info d-flex">
+                  <div>
+                    <h5 class="product-title mb-0">
+                      <a
+                        href="{% url 'product_detail' product.id %}"
+                        class="product-title-link"
+                        >{{ product.p_name }}</a
+                      >
+                    </h5>
+                    <p class="product-p">{{ product.p_dec }}</p>
+                  </div>
+                  <small class="product-price text-muted ms-auto"
+                    >{{ product.p_price }} IQD</small
+                  >
+                </div>
               </div>
             </div>
-            <div class="col-lg-6 col-12">
-              <div class="product-info d-flex">
-                <div>
-                  <h2 class="product-title mb-0">{{ product.p_name }}</h2>
-                </div>
-                <small class="product-price text-muted ms-auto mt-auto mb-5"
-                  >{{ product.p_price }} IQD</small
-                >
-              </div>
-              <div class="product-description">
-                <strong class="d-block mt-4 mb-2">Description</strong>
-                <p class="lead mb-5">{{ product.p_dec }}</p>
-              </div>
-              <div class="product-cart-thumb row">
-                <div class="col-lg-6 col-12">
-                  <select
-                    class="form-select cart-form-select"
-                    id="inputGroupSelect01"
-                  >
-                    <option selected>Quantity</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
-                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                  <button
-                    class="btn custom-btn cart-btn add-to-cart-btn"
-                    data-id="{{ product.id }}"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-                <p>
-                  <a href="#" class="product-additional-link">Details</a>
-                  <a href="#" class="product-additional-link"
-                    >Delivery and Payment</a
-                  >
-                </p>
-              </div>
-            </div>
+            {% endfor %}
+         
+            {% else %}
+            <p>No results found.</p>
+            {% endif %}
           </div>
         </div>
       </section>
@@ -274,8 +275,7 @@
       </div>
     </div>
     <!-- Your existing HTML code here -->
-
-    <!-- JAVASCRIPT FILES -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     document.getElementById('checkoutBtn').addEventListener('click', function() {
         // Assuming you have already stored cart items in localStorage
@@ -335,29 +335,6 @@
         postCartItemsToServer();
     });
 </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $(".add-to-cart-btn").click(function () {
-          var productId = $(this).data("id");
-          var quantity = parseInt($("#inputGroupSelect01").val()); // Get the selected quantity
-          var cart = localStorage.getItem("cart");
-
-          if (cart) {
-            cart = JSON.parse(cart);
-          } else {
-            cart = {};
-          }
-
-          // Increment product quantity in cart by the selected quantity or set to the selected quantity if not exists
-          cart[productId] = quantity;
-
-          localStorage.setItem("cart", JSON.stringify(cart));
-          alert("Product added to cart!");
-        });
-      });
-    </script>
-
     <script>
       $(document).ready(function () {
         // Bind function to execute when the modal is shown
@@ -437,6 +414,7 @@
         });
       });
     </script>
+
     <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

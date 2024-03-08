@@ -19,6 +19,15 @@ def product_all_view(request):
     return render(request, 'products.html', {'products': products, 'categories':categories})
 
 
+def product_search(request):
+    query = request.GET.get('q')
+    print(query)
+    if query:
+        results = Product.objects.filter(p_name__icontains=query)
+    else:
+        results = None
+    return render(request, 'search_result.html', {'results': results, 'query': query})
+
 def product_detail_view(request, product_id):
     product = Product.objects.get(pk=product_id)
     return render(request, 'product-detail.html', {'product': product})
