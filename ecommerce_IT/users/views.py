@@ -24,7 +24,7 @@ def registerORlogin(request):
             return redirect('register')
         else:
             form = CreateUserForm()
-            messages.error(request, f'check the information you have entered!')
+            messages.error(request, 'check the information you have entered!')
             
     if request.method == 'POST' and 'loginbtn' in request.POST:
         username = request.POST.get('username')

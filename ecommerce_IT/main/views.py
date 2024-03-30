@@ -15,7 +15,7 @@ def contact_view(request):
 
 def product_all_view(request):
     products = Product.objects.all()
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('-id')
     return render(request, 'products.html', {'products': products, 'categories':categories})
 
 
@@ -51,7 +51,8 @@ def get_product_price(request):
         response = {
             'name': product.p_name,
             'price': product.p_price,
-            'image':product.p_image.url
+            'image':product.p_image.url,
+            'category':product.category.category,
         }
         return JsonResponse(response)
     except Product.DoesNotExist:

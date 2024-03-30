@@ -51,7 +51,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{% url 'home' %}">
             <strong><span>ICE</span> Store</strong>
           </a>
 
@@ -335,85 +335,167 @@
         postCartItemsToServer();
     });
 </script>
-    <script>
-      $(document).ready(function () {
-        // Bind function to execute when the modal is shown
-        $("#cart-modal").on("show.bs.modal", function (e) {
-          // Retrieve cart items from local storage
-          var cartItems = JSON.parse(localStorage.getItem("cart"));
-          console.log(cartItems);
+<script>
+  $(document).ready(function () {
+    // Bind function to execute when the modal is shown
+    $("#cart-modal").on("show.bs.modal", function (e) {
+      // Retrieve cart items from local storage
+      var cartItems = JSON.parse(localStorage.getItem("cart"));
+      console.log(cartItems);
 
-          // Check if cart items exist
-          if (cartItems) {
-            var totalPrice = 0;
-            var itemRequests = [];
+      // Check if cart items exist
+      if (cartItems) {
+        var totalPrice = 0;
+        var itemRequests = [];
 
-            // Convert cart items object to array of objects
-            var cartItemsArray = Object.entries(cartItems).map(function ([
-              productId,
-              quantity,
-            ]) {
-              return { product_id: productId, quantity: quantity };
-            });
-
-            // Map cart items to AJAX requests to fetch prices
-            cartItemsArray.forEach(function (item) {
-              itemRequests.push(
-                $.ajax({
-                  url: "{% url 'get_product_price' %}",
-                  type: "GET",
-                  data: { product_id: item.product_id },
-                  success: function (response) {
-                    var itemPrice = response.price;
-                    var itemHtml =
-                      '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
-                    itemHtml +=
-                      '<div class="card flex-lg-row align-items-center border-0">';
-                    itemHtml +=
-                      '<img src="' +
-                      response.image +
-                      '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
-                      response.name +
-                      '">';
-                    itemHtml +=
-                      '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
-                    itemHtml +=
-                      '<h5 class="modal-title">' + response.name + "</h5>";
-                    itemHtml +=
-                      '<p class="product-p">Quantity: ' +
-                      item.quantity +
-                      "</p>";
-                    itemHtml +=
-                      '<p class="product-price text-muted mt-3">' +
-                      itemPrice +
-                      " IQD</p>";
-                    itemHtml += "</div></div></div>";
-
-                    // Append item HTML to container
-                    $("#cart-items-container").append(itemHtml);
-
-                    // Calculate total price
-                    totalPrice += parseFloat(itemPrice * item.quantity);
-                  },
-                  error: function (xhr, status, error) {
-                    console.error(error);
-                  },
-                })
-              );
-            });
-
-            // Execute all AJAX requests
-            $.when.apply($, itemRequests).done(function () {
-              // Display total price
-              $("#total-price").text(totalPrice.toFixed(2) + " IQD");
-            });
-          } else {
-            // If cart is empty, display a message or handle it accordingly
-            $("#cart-items-container").html("<p>Cart is empty</p>");
-          }
+        // Convert cart items object to array of objects
+        var cartItemsArray = Object.entries(cartItems).map(function ([
+          productId,
+          quantity,
+        ]) {
+          return { product_id: productId, quantity: quantity };
         });
-      });
-    </script>
+
+        // Map cart items to AJAX requests to fetch prices
+        cartItemsArray.forEach(function (item) {
+          itemRequests.push(
+            $.ajax({
+              url: "{% url 'get_product_price' %}",
+              type: "GET",
+              data: { product_id: item.product_id },
+              success: function (response) {
+                var itemPrice = response.price;
+                var itemHtml =
+                  '<div class="col-12 mt-4 mt-lg-0 align-items-center">';
+                itemHtml +=
+                  '<div class="card flex-lg-row align-items-center border-0">';
+                itemHtml +=
+                  '<img src="' +
+                  response.image +
+                  '" class="img-fluid  col-lg-6 col-md-6 col-sm-12" alt="' +
+                  response.name +
+                  '">';
+                itemHtml +=
+                  '<div class="card-body col-lg-6 col-md-6 col-sm-12 d-flex flex-column justify-content-center">';
+                itemHtml +=
+                  '<h5 class="modal-title">' + response.name + "</h5>";
+                itemHtml +=
+                  '<p class="product-p">Quantity: ' +
+                  item.quantity +
+                  "</p>";
+                itemHtml +=
+                  '<p class="product-price text-muted mt-3">' +
+                  itemPrice +
+                  " IQD</p>";
+                itemHtml += '<button class="btn btn-sm btn-danger delete-item" data-product-id="' + item.product_id + '">X</button>'; // Add a delete button with product ID as data attribute
+                itemHtml += "</div></div></div>";
+
+                // Append item HTML to container
+                $("#cart-items-container").append(itemHtml);
+
+                // Calculate total price
+                totalPrice += parseFloat(itemPrice * item.quantity);
+              },
+              error: function (xhr, status, error) {
+                console.error(error);
+              },
+            })
+          );
+        });
+
+        // Execute all AJAX requests
+        $.when.apply($, itemRequests).done(function () {
+          // Display total price
+          $("#total-price").text(totalPrice.toFixed(2) + " IQD");
+        });
+      } else {
+        // If cart is empty, display a message or handle it accordingly
+        $("#cart-items-container").html("<p>Cart is empty</p>");
+      }
+    });
+  });
+</script>
+<script>
+          // Handle click on delete button (event delegation)
+    $(document).on('click', '.delete-item', function() {
+      var productId = $(this).data('product-id');
+
+      // Remove the item from localStorage
+      removeItemFromLocalStorage(productId);
+
+      // Remove the item card from the modal
+      $(this).closest('.col-12').remove();
+
+      // Optionally, update the total price after deleting the item
+      updateTotalPrice();
+    });
+
+    // Function to remove item from localStorage
+    function removeItemFromLocalStorage(productId) {
+      // Retrieve cart items from localStorage
+      var cartItems = JSON.parse(localStorage.getItem('cart'));
+
+      // Check if cartItems exists and if the item with productId exists
+      if (cartItems && cartItems[productId]) {
+          // Remove the item with productId from cartItems
+          delete cartItems[productId];
+
+          // Update localStorage with the modified cartItems
+          localStorage.setItem('cart', JSON.stringify(cartItems));
+          console.log(localStorage.items)
+      }
+    }
+
+    // Function to update total price
+    function updateTotalPrice() {
+      // Retrieve cart items from local storage
+      var cartItems = JSON.parse(localStorage.getItem("cart"));
+      console.log(cartItems);
+
+      // Check if cart items exist
+      if (cartItems) {
+        var totalPrice = 0;
+        var itemRequests = [];
+
+        // Convert cart items object to array of objects
+        var cartItemsArray = Object.entries(cartItems).map(function ([
+          productId,
+          quantity,
+        ]) {
+          return { product_id: productId, quantity: quantity };
+        });
+
+        // Map cart items to AJAX requests to fetch prices
+        cartItemsArray.forEach(function (item) {
+          itemRequests.push(
+            $.ajax({
+              url: "{% url 'get_product_price' %}",
+              type: "GET",
+              data: { product_id: item.product_id },
+              success: function (response) {
+                var itemPrice = response.price;
+                // Calculate total price
+                totalPrice += parseFloat(itemPrice * item.quantity);
+              },
+              error: function (xhr, status, error) {
+                console.error(error);
+              },
+            })
+          );
+        });
+
+        // Execute all AJAX requests
+        $.when.apply($, itemRequests).done(function () {
+          // Display total price
+          $("#total-price").text(totalPrice.toFixed(2) + " IQD");
+        });
+      } else {
+        // If cart is empty, display a message or handle it accordingly
+        $("#cart-items-container").html("<p>Cart is empty</p>");
+      }
+    }
+
+</script>
 
     <!-- JAVASCRIPT FILES -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
