@@ -33,7 +33,6 @@ def product_detail_view(request, product_id):
     return render(request, 'product-detail.html', {'product': product})
 
 
-######## احتياط
 def get_cart_items(request):
     # Retrieve cart items from session
     cart_items = request.session.get('cart', [])
@@ -62,9 +61,8 @@ def get_product_price(request):
 @login_required(login_url='register')    
 def create_order(request):
     if request.method == 'POST':
-        # Assuming the request data contains product ids and quantities
         data = json.loads(request.body)
-        product_ids_quantities = data.get('cart', {})  # Assuming products are sent as a dictionary with product_id as key and quantity as value
+        product_ids_quantities = data.get('cart', {})  #products are sent as a dictionary with product_id as key and quantity as value
         print(product_ids_quantities)
         # Calculate the total price
         total_price = 0
@@ -78,7 +76,7 @@ def create_order(request):
             total_price += item_price
             order_items[product_id] = {'name': product.p_name, 'quantity': quantity, 'price_per_item': str(product.p_price), 'total_price': str(item_price)}
 
-        # Create the order
+        # Create the order !! static EMAIL APPROACH just to get things done
         client_name = "TEST"
         client_email = "TEST@gmail.com"
         client_phone = 2132140
@@ -96,7 +94,6 @@ def create_order(request):
         return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
-######## احتياط
 def checkout(request):
     if request.method == 'GET':
         order_id = request.session.get('order_id')
